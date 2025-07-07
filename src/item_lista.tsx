@@ -1,6 +1,8 @@
 import { useState, type ChangeEvent, type Dispatch, type SetStateAction } from 'react'
 import { v4 as uuidv4 } from 'uuid';
 import type { Tarefa } from './main';
+import { Button, InputGroup } from 'react-bootstrap';
+import { FaFloppyDisk, FaPencil, FaTrash, FaCheck } from "react-icons/fa6";
 
 interface ItemListaProps {
     item: Tarefa
@@ -68,7 +70,7 @@ export function ItemLista({ item, setTarefas }: ItemListaProps) {
         })
     };
 
-        function handleClickDescompletar() {
+    function handleClickDescompletar() {
         setTarefas(function (tarefasAtuais) {
             const tarefasModificadas = tarefasAtuais.map(function (itemDoMap) {
                 if (item.id == itemDoMap.id)
@@ -86,21 +88,31 @@ export function ItemLista({ item, setTarefas }: ItemListaProps) {
     };
 
     return (
-        <li>
-            <input disabled={disabled} value={value} onChange={handleChange} />
-            {item.completado == false ? (
-                <>
-                    <button disabled={!disabled} onClick={handleClickEditar}>Editar</button>
-                    <button disabled={disabled} onClick={handleClickSalvar}>Salvar</button>
-                    <button disabled={!disabled} onClick={handleClickDeletar}>Deletar</button>
-                    <button disabled={!disabled} onClick={handleClickCompletar}>Completar</button>
-                </>
-            ) : (
-                <>
-                    <button onClick={handleClickDescompletar}>Adicionar na lista</button>
-                </>
-            )
-            }
+        <li className='my-1'>
+            <InputGroup>
+                <input className='form-control' disabled={disabled} value={value} onChange={handleChange} />
+                {item.completado == false ? (
+                    <>
+                        <Button title='Editar' variant= 'warning' size='sm' disabled={!disabled} onClick={handleClickEditar}>
+                            <FaPencil/>
+                        </Button>
+                        <Button title='Salvar'size='sm' variant='success' disabled={disabled} onClick={handleClickSalvar}>
+                            <FaFloppyDisk/>
+                        </Button>
+                        <Button title='Deletar' size='sm' variant='danger'disabled={!disabled} onClick={handleClickDeletar}>
+                            <FaTrash/>
+                        </Button>
+                        <Button title='Completar' size='sm' disabled={!disabled} onClick={handleClickCompletar}>
+                            <FaCheck/>
+                        </Button>
+                    </>
+                ) : (
+                    <>
+                        <Button size='sm' variant='secondary' onClick={handleClickDescompletar}>Adicionar na lista</Button>
+                    </>
+                )
+                }
+                </InputGroup>
         </li>
     )
 }
