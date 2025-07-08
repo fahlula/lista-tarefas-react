@@ -17,7 +17,7 @@ export interface Tarefa {
 
 function App() {
     const [inputAdicionar, setInputAdicionar] = useState("");
-    const [tarefas, setTarefas] = useState<Tarefa[]>(JSON.parse(localStorage.getItem('tarefas')|| ""));
+    const [tarefas, setTarefas] = useState<Tarefa[]>(JSON.parse(localStorage.getItem('tarefas')|| "[]"));
     const [erro, setErro] = useState(false);
 
     useEffect(() => {
